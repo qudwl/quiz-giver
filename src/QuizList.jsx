@@ -1,6 +1,14 @@
-import { Card, CardOverflow, Grid, Link, Stack, Typography } from "@mui/joy";
+import {
+  Button,
+  Card,
+  CardOverflow,
+  Grid,
+  Link,
+  Stack,
+  Typography,
+} from "@mui/joy";
 import { useDispatch } from "react-redux";
-import { setTotalQuestions } from "./redux/slice";
+import { resetScore, setTotalQuestions, deleteQuiz } from "./redux/slice";
 
 const options = {
   weekday: "long",
@@ -35,6 +43,7 @@ const QuizList = ({ quizzes, setQuizNum }) => {
             onClick={() => {
               setQuizNum(key++);
               dispatch(setTotalQuestions(quiz.questions.length));
+              dispatch(resetScore());
             }}
           />
           {quiz.played && (
@@ -46,11 +55,22 @@ const QuizList = ({ quizzes, setQuizNum }) => {
                 py: 1.5,
                 px: "var(--Card-padding)",
                 bgcolor: "background.level1",
+                justifyContent: "space-between",
+                alignItems: "center",
               }}
             >
-              <Typography level="body5">
+              <Typography level="body3">
                 Last Score: {quiz.score} / {quiz.questions.length}
               </Typography>
+              <Button
+                variant="soft"
+                color="danger"
+                onClick={() => {
+                  dispatch(deleteQuiz(quiz.id - 1));
+                }}
+              >
+                Delete
+              </Button>
             </CardOverflow>
           )}
         </Card>

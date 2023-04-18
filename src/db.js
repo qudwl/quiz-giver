@@ -91,4 +91,49 @@ const setLastScore = async (id, score) => {
   await store.put(quiz);
 };
 
-export { createDB, startDB, returnQuizzes, setLastScore };
+const deleteQuiz = async (id) => {
+  const db = await createDB();
+  const tx = db.transaction("quizzes", "readwrite");
+  const store = tx.objectStore("quizzes");
+  console.log(id);
+  await store.delete(IDBKeyRange.only(id));
+};
+
+const reset = async () => {
+  const db = await createDB();
+  const tx = db.transaction("quizzes", "readwrite");
+  const store = tx.objectStore("quizzes");
+  await store.clear();
+};
+
+const addQuiz = async (data) => {
+  const db = await createDB();
+  const tx = db.transaction("quizzes", "readwrite");
+  const store = tx.objectStore("quizzes");
+  const tmp = [];
+  for (let i = 1; i <= data.length; i++) {
+    tmp.push({
+      id: i,
+      question: data[i - 1].QuestionText,
+      answers: data[i - 1].answers.map((answer) => {
+        return { answer: answer.AnswerText, weight: answer.IsCorrect };
+      }),
+    });
+  }
+  const quiz = {
+    title: `Quiz ${data.length + 1}`,
+    questions: tmp,
+    time: new Date().toISOString(),
+  };
+  store.add(quiz);
+};
+
+export {
+  createDB,
+  startDB,
+  returnQuizzes,
+  setLastScore,
+  deleteQuiz,
+  reset,
+  addQuiz,
+};

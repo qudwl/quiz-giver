@@ -2,7 +2,7 @@ import { Button, Stack, Typography } from "@mui/joy";
 import ScoreCounter from "./ScoreCounter";
 import { setLastScore } from "./db";
 import { useDispatch, useSelector } from "react-redux";
-import { changeQuizState, resetScore } from "./redux/slice";
+import { changeQuizState } from "./redux/slice";
 
 const QuizResult = ({ setQuizDone, setQuizNum, quizNum }) => {
   const curScore = useSelector((state) => state.slice.currentScore);
@@ -17,8 +17,7 @@ const QuizResult = ({ setQuizDone, setQuizNum, quizNum }) => {
             setQuizDone(false);
             setQuizNum(-1);
             dispatch(
-              changeQuizState({ played: true, score: curScore, id: quizNum }),
-              resetScore()
+              changeQuizState({ played: true, score: curScore, id: quizNum })
             );
           });
         }}

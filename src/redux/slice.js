@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { deleteQuiz as dq } from "../db";
 
 export const slice = createSlice({
   name: "data",
@@ -24,6 +25,10 @@ export const slice = createSlice({
     setTotalQuestions: (state, action) => {
       state.totalQuestions = action.payload;
     },
+    deleteQuiz: (state, action) => {
+      dq(action.payload + 1);
+      state.quizzes.splice(action.payload, 1);
+    },
   },
 });
 
@@ -34,6 +39,7 @@ export const {
   setQuizzes,
   changeQuizState,
   resetScore,
+  deleteQuiz,
 } = slice.actions;
 
 export default slice.reducer;

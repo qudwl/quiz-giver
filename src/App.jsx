@@ -8,6 +8,7 @@ import Quiz from "./Quiz";
 import QuizResult from "./QuizResult";
 import { useDispatch, useSelector } from "react-redux";
 import { setQuizzes } from "./redux/slice";
+import { Typography } from "@mui/joy";
 
 const App = () => {
   const quizzes = useSelector((state) => state.slice.quizzes);
@@ -32,6 +33,18 @@ const App = () => {
         />
       ) : (
         <Quiz setQuizDone={setQuizDone} quiz={quizzes[quizNum]} />
+      )}
+      {quizNum === -1 && (
+        <Typography
+          sx={{
+            position: "fixed",
+            bottom: "5px",
+            width: "100vw",
+            textAlign: "center",
+          }}
+        >
+          {quizzes.length} Quizzes
+        </Typography>
       )}
     </CssVarsProvider>
   );

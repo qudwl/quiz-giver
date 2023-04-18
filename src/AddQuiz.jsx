@@ -13,7 +13,24 @@ import {
   Input,
 } from "@mui/joy";
 
+import { addQuiz } from "./db";
+
+const getQuizFromOnline = async (url) => {
+  const res = fetch(url).then((res, err) => {
+    if (err) {
+      console.log(err);
+      return false;
+    }
+    return res;
+  });
+  if (!res) return false;
+  const data = await res.json();
+  addQuiz(data);
+  return true;
+};
+
 const AddQuiz = ({ open, setOpen }) => {
+  const [url, setUrl] = useState("");
   const ref = useRef(null);
   const [loading, setLoading] = useState(false);
   return (
@@ -29,12 +46,13 @@ const AddQuiz = ({ open, setOpen }) => {
                 <Button onClick={() => ref.current.click()}>Upload</Button>
                 <input
                   onChange={(e) => {
-                    console.log(e);
                     setLoading(true);
-                    setTimeout(() => {
-                      setOpen(false);
+                    e.target.files[0].text().then((res) => {
+                      const data = JSON.parse(res);
+                      addQuiz();
                       setLoading(false);
-                    }, 2000);
+                      setOpen(false);
+                    });
                   }}
                   ref={ref}
                   hidden
@@ -45,14 +63,20 @@ const AddQuiz = ({ open, setOpen }) => {
             <FormControl>
               <FormLabel>Enter URL</FormLabel>
               <Stack my={1} direction="row" spacing={2}>
-                <Input />
+                <Input value={url} onChange={(res) => setUrl(res)} />
                 <Button
                   onClick={() => {
                     setLoading(true);
-                    setTimeout(() => {
-                      setOpen(false);
-                      setLoading(false);
-                    }, 2000);
+                    getQuizFromOnline(url).then((res) => {
+                      if (res) {
+                        setOpen(false);
+                        setLoading(false);
+                        setUrl("");
+                      } else {
+                        setLoading(false);
+                        setUrl("Error!");
+                      }
+                    });
                   }}
                 >
                   Submit
