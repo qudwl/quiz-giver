@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.js": "/quiz-giver/static/js/main.611ee1b9.js",
+    "main.js": "/quiz-giver/static/js/main.f455b870.js",
     "static/js/787.74ea346f.chunk.js": "/quiz-giver/static/js/787.74ea346f.chunk.js",
     "index.html": "/quiz-giver/index.html",
-    "main.611ee1b9.js.map": "/quiz-giver/static/js/main.611ee1b9.js.map",
+    "main.f455b870.js.map": "/quiz-giver/static/js/main.f455b870.js.map",
     "787.74ea346f.chunk.js.map": "/quiz-giver/static/js/787.74ea346f.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.611ee1b9.js"
+    "static/js/main.f455b870.js"
   ]
 }
