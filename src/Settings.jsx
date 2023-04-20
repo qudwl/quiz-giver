@@ -45,7 +45,7 @@ const Settings = ({ open, setOpen }) => {
               color="danger"
               onClick={() => {
                 localStorage.clear();
-                // reset();
+                reset();
                 window.location.reload();
               }}
             >

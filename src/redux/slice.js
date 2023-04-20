@@ -12,6 +12,9 @@ export const slice = createSlice({
     setQuizzes: (state, action) => {
       state.quizzes = action.payload;
     },
+    addQuizSlice: (state, action) => {
+      state.quizzes.push(action.payload);
+    },
     changeQuizState: (state, action) => {
       state.quizzes[action.payload.id].played = action.payload.played;
       state.quizzes[action.payload.id].score = action.payload.score;
@@ -40,6 +43,7 @@ export const {
   changeQuizState,
   resetScore,
   deleteQuiz,
+  addQuizSlice
 } = slice.actions;
 
 export default slice.reducer;

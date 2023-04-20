@@ -58,6 +58,9 @@ const Quiz = ({ quiz, setQuizDone }) => {
   };
 
   const answerArr = question.answers.map((answer) => {
+    if (answer.answer.length === 0) {
+      return "";
+    }
     return (
       <Button
         key={answer.id}

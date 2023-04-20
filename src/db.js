@@ -85,7 +85,7 @@ const setLastScore = async (id, score) => {
   const tx = db.transaction("quizzes", "readwrite");
   const store = tx.objectStore("quizzes");
 
-  const quiz = await store.get(id + 1);
+  const quiz = await store.get(id);
   quiz.score = score;
   quiz.played = true;
   await store.put(quiz);
@@ -110,22 +110,14 @@ const addQuiz = async (data) => {
   const db = await createDB();
   const tx = db.transaction("quizzes", "readwrite");
   const store = tx.objectStore("quizzes");
-  const tmp = [];
-  for (let i = 1; i <= data.length; i++) {
-    tmp.push({
-      id: i,
-      question: data[i - 1].QuestionText,
-      answers: data[i - 1].answers.map((answer) => {
-        return { answer: answer.AnswerText, weight: answer.IsCorrect };
-      }),
-    });
-  }
+  const numQuiz = await store.count();
   const quiz = {
-    title: `Quiz ${data.length + 1}`,
-    questions: tmp,
+    title: `Quiz ${numQuiz + 1}`,
+    questions: data,
     time: new Date().toISOString(),
   };
   store.add(quiz);
+  return quiz;
 };
 
 export {

@@ -32,7 +32,7 @@ const App = () => {
           setQuizDone={setQuizDone}
         />
       ) : (
-        <Quiz setQuizDone={setQuizDone} quiz={quizzes[quizNum]} />
+        <Quiz setQuizDone={setQuizDone} quiz={quizzes.find(element => element.id == quizNum)} />
       )}
       {quizNum === -1 && (
         <Typography

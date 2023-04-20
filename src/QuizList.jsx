@@ -18,13 +18,12 @@ const options = {
 };
 
 const QuizList = ({ quizzes, setQuizNum }) => {
-  let key = 0;
   const dispatch = useDispatch();
   const quizArr = quizzes.map((quiz) => {
     const date = new Date(quiz.time);
     return (
-      <Grid xs={12} md={4} key={key}>
-        <Card>
+      <Grid xs={12} md={4} key={quiz.id}>
+        <Card variant="outlined">
           <Stack
             direction={{ xs: "column", md: "row" }}
             m={2}
@@ -41,7 +40,7 @@ const QuizList = ({ quizzes, setQuizNum }) => {
           <Link
             overlay
             onClick={() => {
-              setQuizNum(key++);
+              setQuizNum(quiz.id);
               dispatch(setTotalQuestions(quiz.questions.length));
               dispatch(resetScore());
             }}
@@ -79,7 +78,7 @@ const QuizList = ({ quizzes, setQuizNum }) => {
   });
   return (
     <Stack spacing={2} columns={{ xs: 4, md: 12 }} m={2}>
-      <Grid container>{quizArr}</Grid>
+      <Grid container spacing={2}>{quizArr}</Grid>
     </Stack>
   );
 };
